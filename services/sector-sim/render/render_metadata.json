@@ -1,0 +1,58 @@
+{
+  "description": "Render fallback descriptors and metadata for each primitive. Unknown renderers must gracefully display the fallback representation.",
+  "fallback_registry": {
+    "flat_panel": {
+      "type": "quad",
+      "emissive": false,
+      "default_color": "#CCCCCC"
+    },
+    "box": {
+      "type": "cube",
+      "emissive": false,
+      "default_color": "#AAAAAA"
+    },
+    "point_light": {
+      "type": "sphere_glow",
+      "emissive": true,
+      "default_color": "#FFFFFF"
+    },
+    "emissive_strip": {
+      "type": "elongated_quad",
+      "emissive": true,
+      "default_color": "#FF00FF",
+      "glow_falloff": "linear",
+      "description": "Bright emissive strip used as fallback for strip-type lighting primitives. Renders as a glowing elongated quad with configurable color and intensity."
+    }
+  },
+  "primitive_render_profiles": {
+    "solar_panel_v1": {
+      "fallback": "flat_panel",
+      "metadata": {
+        "albedo": "#2244AA",
+        "reflectance": 0.7
+      }
+    },
+    "cargo_crate_v1": {
+      "fallback": "box",
+      "metadata": {
+        "albedo": "#887766",
+        "reflectance": 0.2
+      }
+    },
+    "beacon_light_v1": {
+      "fallback": "point_light",
+      "metadata": {
+        "color": "#FFAA00",
+        "intensity": 0.8
+      }
+    },
+    "neon_light_strip_v2": {
+      "fallback": "emissive_strip",
+      "metadata": {
+        "color_palette": ["#FF00FF", "#00FFFF", "#FF4400", "#44FF00"],
+        "glow_intensity": 1.2,
+        "emissive": true
+      }
+    }
+  }
+}

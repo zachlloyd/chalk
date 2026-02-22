@@ -1,0 +1,91 @@
+{
+  "$schema": "./catalog_schema.json",
+  "version": "3.2.0",
+  "primitives": {
+    "solar_panel_v1": {
+      "category": "ENTITY",
+      "capabilities": ["POWER_GEN"],
+      "rollout": "STABLE",
+      "constraints": {
+        "attach_to": ["block_face", "module_face"],
+        "max_contiguous_length": null
+      },
+      "sim": {
+        "power_generation_kw": 1.5,
+        "power_consumption_kw": 0.0,
+        "visibility_contribution": 0.0
+      },
+      "render": {
+        "fallback": "flat_panel",
+        "metadata": {
+          "albedo": "#2244AA",
+          "reflectance": 0.7
+        }
+      }
+    },
+    "cargo_crate_v1": {
+      "category": "ENTITY",
+      "capabilities": ["STORAGE"],
+      "rollout": "STABLE",
+      "constraints": {
+        "attach_to": ["block_face", "module_face", "ground"],
+        "max_contiguous_length": null
+      },
+      "sim": {
+        "power_generation_kw": 0.0,
+        "power_consumption_kw": 0.0,
+        "visibility_contribution": 0.0
+      },
+      "render": {
+        "fallback": "box",
+        "metadata": {
+          "albedo": "#887766",
+          "reflectance": 0.2
+        }
+      }
+    },
+    "beacon_light_v1": {
+      "category": "ENTITY",
+      "capabilities": ["LIGHTING", "AESTHETIC"],
+      "rollout": "STABLE",
+      "constraints": {
+        "attach_to": ["block_face", "module_face"],
+        "max_contiguous_length": null
+      },
+      "sim": {
+        "power_generation_kw": 0.0,
+        "power_consumption_kw": 0.3,
+        "visibility_contribution": 5.0
+      },
+      "render": {
+        "fallback": "point_light",
+        "metadata": {
+          "color": "#FFAA00",
+          "intensity": 0.8
+        }
+      }
+    },
+    "neon_light_strip_v2": {
+      "category": "ENTITY",
+      "capabilities": ["AESTHETIC", "LIGHTING", "WAYFINDING"],
+      "rollout": "EXPERIMENTAL",
+      "constraints": {
+        "attach_to": ["block_face", "module_face"],
+        "max_contiguous_length": 32
+      },
+      "sim": {
+        "power_generation_kw": 0.0,
+        "power_consumption_kw": 0.15,
+        "visibility_contribution": 8.0
+      },
+      "render": {
+        "fallback": "emissive_strip",
+        "metadata": {
+          "color_palette": ["#FF00FF", "#00FFFF", "#FF4400", "#44FF00"],
+          "glow_intensity": 1.2,
+          "emissive": true
+        }
+      }
+    }
+  }
+}

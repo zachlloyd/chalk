@@ -1,0 +1,44 @@
+{
+  "capabilities": {
+    "POWER_GEN": {
+      "description": "Generates electrical power for the local grid.",
+      "sim_effects": ["power_output"],
+      "introduced": "1.0.0"
+    },
+    "STORAGE": {
+      "description": "Provides volumetric storage for cargo and resources.",
+      "sim_effects": ["storage_capacity"],
+      "introduced": "1.0.0"
+    },
+    "LIGHTING": {
+      "description": "Emits visible light, contributing to local illumination.",
+      "sim_effects": ["visibility_contribution"],
+      "introduced": "1.0.0"
+    },
+    "AESTHETIC": {
+      "description": "Decorative element that contributes to sector visual quality score.",
+      "sim_effects": ["aesthetic_score"],
+      "introduced": "1.0.0"
+    },
+    "STRUCTURAL": {
+      "description": "Provides structural support or attachment surfaces.",
+      "sim_effects": ["structural_integrity"],
+      "introduced": "1.1.0"
+    },
+    "THERMAL": {
+      "description": "Manages heat generation or dissipation.",
+      "sim_effects": ["thermal_delta"],
+      "introduced": "2.0.0"
+    },
+    "COMMS": {
+      "description": "Provides communication relay or signal boost.",
+      "sim_effects": ["signal_strength"],
+      "introduced": "2.1.0"
+    },
+    "WAYFINDING": {
+      "description": "Provides directional guidance cues. Contributes to local visibility score used by drone traffic heuristics for pathfinding and navigation.",
+      "sim_effects": ["visibility_contribution", "drone_traffic_weight"],
+      "introduced": "3.3.0"
+    }
+  }
+}

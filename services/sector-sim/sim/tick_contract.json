@@ -1,0 +1,30 @@
+{
+  "description": "Deterministic per-tick simulation contract. Each primitive's sim output must be fully deterministic given the same input state and seed.",
+  "tick_rules": {
+    "solar_panel_v1": {
+      "power_output": "power_generation_kw * sun_exposure_factor",
+      "power_draw": "power_consumption_kw",
+      "visibility_delta": 0.0,
+      "deterministic": true
+    },
+    "cargo_crate_v1": {
+      "power_output": 0.0,
+      "power_draw": 0.0,
+      "visibility_delta": 0.0,
+      "deterministic": true
+    },
+    "beacon_light_v1": {
+      "power_output": 0.0,
+      "power_draw": "power_consumption_kw",
+      "visibility_delta": "visibility_contribution",
+      "deterministic": true
+    },
+    "neon_light_strip_v2": {
+      "power_output": 0.0,
+      "power_draw": "power_consumption_kw",
+      "visibility_delta": "visibility_contribution",
+      "drone_traffic_weight": "visibility_contribution * 0.5",
+      "deterministic": true
+    }
+  }
+}

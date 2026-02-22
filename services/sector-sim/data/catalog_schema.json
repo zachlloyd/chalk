@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Primitive Catalog",
+  "type": "object",
+  "required": ["version", "primitives"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "primitives": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/primitive"
+      },
+      "minProperties": 1
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "primitive": {
+      "type": "object",
+      "required": ["category", "capabilities", "rollout", "constraints", "sim", "render"],
+      "properties": {
+        "category": {
+          "type": "string",
+          "enum": ["ENTITY", "BLOCK", "MODULE", "TERRAIN"]
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "POWER_GEN",
+              "STORAGE",
+              "LIGHTING",
+              "AESTHETIC",
+              "WAYFINDING",
+              "STRUCTURAL",
+              "THERMAL",
+              "COMMS"
+            ]
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "rollout": {
+          "type": "string",
+          "enum": ["EXPERIMENTAL", "BETA", "STABLE", "DEPRECATED"]
+        },
+        "constraints": {
+          "type": "object",
+          "required": ["attach_to", "max_contiguous_length"],
+          "properties": {
+            "attach_to": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["block_face", "module_face", "ground"]
+              },
+              "minItems": 1
+            },
+            "max_contiguous_length": {
+              "oneOf": [
+                { "type": "integer", "minimum": 1 },
+                { "type": "null" }
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "sim": {
+          "type": "object",
+          "required": ["power_generation_kw", "power_consumption_kw", "visibility_contribution"],
+          "properties": {
+            "power_generation_kw": { "type": "number", "minimum": 0 },
+            "power_consumption_kw": { "type": "number", "minimum": 0 },
+            "visibility_contribution": { "type": "number", "minimum": 0 }
+          },
+          "additionalProperties": false
+        },
+        "render": {
+          "type": "object",
+          "required": ["fallback", "metadata"],
+          "properties": {
+            "fallback": {
+              "type": "string",
+              "minLength": 1
+            },
+            "metadata": {
+              "type": "object",
+              "minProperties": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
