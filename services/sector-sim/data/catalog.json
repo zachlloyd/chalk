@@ -1,54 +1,64 @@
 {
-  "$schema": "../schemas/catalog.schema.json",
-  "version": "1.4.0",
+  "version": "0.4.0",
   "primitives": {
     "solar_panel_v1": {
+      "id": "solar_panel_v1",
       "category": "ENTITY",
-      "capabilities": ["POWER_GEN", "AESTHETIC"],
-      "rollout": "STABLE",
+      "capabilities": ["POWER_GEN"],
       "sim": {
-        "power_generation_kw": 5.0,
-        "power_consumption_kw": 0.0,
-        "tick_effects": []
+        "power_generation": 12.0,
+        "power_consumption": 0.0,
+        "tick_behavior": "PASSIVE",
+        "effects": []
       },
       "render": {
-        "fallback": "flat_panel",
-        "metadata": {
-          "albedo": "#2a2a5e",
-          "reflectivity": 0.85
-        }
+        "fallback": {
+          "type": "MESH",
+          "emissive": false,
+          "color": "#2244AA",
+          "opacity": 1.0
+        },
+        "metadata": {}
       },
       "constraints": {
-        "attach_to": ["block_face", "module_face"],
-        "max_contiguous_segments": null
-      }
+        "attachment": "BLOCK_FACE"
+      },
+      "rollout": "STABLE"
     },
-    "beacon_light_v1": {
+    "neon_light_strip_v2": {
+      "id": "neon_light_strip_v2",
       "category": "ENTITY",
-      "capabilities": ["LIGHTING", "WAYFINDING"],
-      "rollout": "STABLE",
+      "capabilities": ["AESTHETIC", "LIGHTING", "WAYFINDING"],
       "sim": {
-        "power_generation_kw": 0.0,
-        "power_consumption_kw": 0.5,
-        "tick_effects": [
+        "power_generation": 0.0,
+        "power_consumption": 0.5,
+        "tick_behavior": "PASSIVE",
+        "effects": [
           {
-            "type": "visibility_contribution",
-            "radius": 8,
-            "score": 10.0
+            "type": "VISIBILITY_SCORE",
+            "scope": "LOCAL",
+            "value": 1.5
           }
         ]
       },
       "render": {
-        "fallback": "point_light",
+        "fallback": {
+          "type": "STRIP",
+          "emissive": true,
+          "color": "#00FFCC",
+          "opacity": 0.95
+        },
         "metadata": {
-          "color": "#ffcc00",
-          "intensity": 1.0
+          "color_palette": ["#00FFCC", "#FF00FF", "#00CCFF", "#FFAA00", "#FF3366"],
+          "glow_intensity": 0.8,
+          "glow_intensity_range": [0.1, 1.0]
         }
       },
       "constraints": {
-        "attach_to": ["block_face"],
-        "max_contiguous_segments": null
-      }
+        "attachment": "BLOCK_OR_MODULE_FACE",
+        "max_contiguous_segments": 32
+      },
+      "rollout": "EXPERIMENTAL"
     }
   }
 }

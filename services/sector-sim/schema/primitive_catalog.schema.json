@@ -1,0 +1,169 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Primitive Catalog",
+  "description": "Schema for the sector-sim primitive catalog",
+  "type": "object",
+  "required": ["version", "primitives"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "primitives": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/Primitive"
+      }
+    }
+  },
+  "definitions": {
+    "Primitive": {
+      "type": "object",
+      "required": [
+        "id",
+        "category",
+        "capabilities",
+        "sim",
+        "render",
+        "constraints",
+        "rollout"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["ENTITY", "BLOCK", "MODULE", "TERRAIN"]
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "AESTHETIC",
+              "LIGHTING",
+              "WAYFINDING",
+              "STRUCTURAL",
+              "POWER_GEN",
+              "STORAGE",
+              "NAVIGATION",
+              "COMPUTING",
+              "LIFE_SUPPORT"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "sim": {
+          "$ref": "#/definitions/SimConfig"
+        },
+        "render": {
+          "$ref": "#/definitions/RenderConfig"
+        },
+        "constraints": {
+          "$ref": "#/definitions/Constraints"
+        },
+        "rollout": {
+          "type": "string",
+          "enum": ["EXPERIMENTAL", "STAGING", "STABLE", "DEPRECATED"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "SimConfig": {
+      "type": "object",
+      "required": ["power_generation", "power_consumption", "tick_behavior"],
+      "properties": {
+        "power_generation": {
+          "type": "number",
+          "minimum": 0
+        },
+        "power_consumption": {
+          "type": "number",
+          "minimum": 0
+        },
+        "tick_behavior": {
+          "type": "string",
+          "enum": ["PASSIVE", "ACTIVE", "REACTIVE"]
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SimEffect"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "SimEffect": {
+      "type": "object",
+      "required": ["type", "scope", "value"],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string",
+          "enum": ["LOCAL", "SECTOR", "GLOBAL"]
+        },
+        "value": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false
+    },
+    "RenderConfig": {
+      "type": "object",
+      "required": ["fallback"],
+      "properties": {
+        "fallback": {
+          "$ref": "#/definitions/RenderFallback"
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "RenderFallback": {
+      "type": "object",
+      "required": ["type", "emissive"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["STRIP", "CUBE", "SPHERE", "MESH", "SPRITE"]
+        },
+        "emissive": {
+          "type": "boolean"
+        },
+        "color": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "opacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "Constraints": {
+      "type": "object",
+      "properties": {
+        "attachment": {
+          "type": "string",
+          "enum": ["NONE", "BLOCK_FACE", "MODULE_FACE", "BLOCK_OR_MODULE_FACE", "GROUND"]
+        },
+        "max_contiguous_segments": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
