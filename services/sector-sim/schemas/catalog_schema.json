@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Primitive Catalog",
+  "type": "object",
+  "required": ["version", "primitives"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "primitives": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/primitive"
+      },
+      "minProperties": 1
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "primitive": {
+      "type": "object",
+      "required": ["category", "capabilities", "rollout", "constraints", "sim", "render"],
+      "properties": {
+        "category": {
+          "type": "string",
+          "enum": ["ENTITY", "BLOCK", "MODULE"]
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "AESTHETIC",
+              "LIGHTING",
+              "WAYFINDING",
+              "SIGNALING",
+              "POWER_GENERATION",
+              "POWER_STORAGE",
+              "STRUCTURAL",
+              "CARGO",
+              "LIFE_SUPPORT"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "rollout": {
+          "type": "string",
+          "enum": ["EXPERIMENTAL", "BETA", "STABLE", "DEPRECATED"]
+        },
+        "constraints": {
+          "$ref": "#/definitions/constraints"
+        },
+        "sim": {
+          "$ref": "#/definitions/sim"
+        },
+        "render": {
+          "$ref": "#/definitions/render"
+        }
+      },
+      "additionalProperties": false
+    },
+    "constraints": {
+      "type": "object",
+      "required": ["attach_to"],
+      "properties": {
+        "attach_to": {
+          "type": "string",
+          "enum": ["BLOCK_OR_MODULE_FACE", "FREESTANDING", "EMBEDDED"]
+        },
+        "max_contiguous_segments": {
+          "type": ["integer", "null"],
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "sim": {
+      "type": "object",
+      "required": ["power", "visibility_contribution"],
+      "properties": {
+        "power": {
+          "type": "object",
+          "required": ["generation_per_tick", "consumption_per_tick"],
+          "properties": {
+            "generation_per_tick": {
+              "type": "number",
+              "minimum": 0
+            },
+            "consumption_per_tick": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "visibility_contribution": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "render": {
+      "type": "object",
+      "required": ["type", "fallback", "metadata"],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "fallback": {
+          "type": "string"
+        },
+        "metadata": {
+          "type": "object",
+          "required": ["color_palette"],
+          "properties": {
+            "color_palette": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^#[0-9a-fA-F]{6}$"
+              },
+              "minItems": 1
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

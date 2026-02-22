@@ -1,53 +1,76 @@
 {
-  "$schema": "../schemas/catalog.schema.json",
-  "version": "1.4.0",
+  "version": "2.1.0",
   "primitives": {
     "solar_panel_v1": {
       "category": "ENTITY",
-      "capabilities": ["POWER_GEN", "AESTHETIC"],
+      "capabilities": ["POWER_GENERATION"],
       "rollout": "STABLE",
+      "constraints": {
+        "attach_to": "BLOCK_OR_MODULE_FACE",
+        "max_contiguous_segments": null
+      },
       "sim": {
-        "power_generation_kw": 5.0,
-        "power_consumption_kw": 0.0,
-        "tick_effects": []
+        "power": {
+          "generation_per_tick": 5.0,
+          "consumption_per_tick": 0.0
+        },
+        "visibility_contribution": 0.0
       },
       "render": {
+        "type": "flat_panel",
         "fallback": "flat_panel",
         "metadata": {
-          "albedo": "#2a2a5e",
-          "reflectivity": 0.85
+          "color_palette": ["#1a1a2e", "#16213e"],
+          "reflectivity": 0.7
         }
-      },
-      "constraints": {
-        "attach_to": ["block_face", "module_face"],
-        "max_contiguous_segments": null
       }
     },
-    "beacon_light_v1": {
+    "cargo_beacon_v1": {
       "category": "ENTITY",
-      "capabilities": ["LIGHTING", "WAYFINDING"],
+      "capabilities": ["WAYFINDING", "SIGNALING"],
       "rollout": "STABLE",
+      "constraints": {
+        "attach_to": "BLOCK_OR_MODULE_FACE",
+        "max_contiguous_segments": null
+      },
       "sim": {
-        "power_generation_kw": 0.0,
-        "power_consumption_kw": 0.5,
-        "tick_effects": [
-          {
-            "type": "visibility_contribution",
-            "radius": 8,
-            "score": 10.0
-          }
-        ]
+        "power": {
+          "generation_per_tick": 0.0,
+          "consumption_per_tick": 1.0
+        },
+        "visibility_contribution": 3.0
       },
       "render": {
-        "fallback": "point_light",
+        "type": "beacon_pulse",
+        "fallback": "beacon_pulse",
         "metadata": {
-          "color": "#ffcc00",
-          "intensity": 1.0
+          "color_palette": ["#ff6600"],
+          "pulse_rate": 1.5
         }
-      },
+      }
+    },
+    "neon_light_strip_v2": {
+      "category": "ENTITY",
+      "capabilities": ["AESTHETIC", "LIGHTING", "WAYFINDING"],
+      "rollout": "EXPERIMENTAL",
       "constraints": {
-        "attach_to": ["block_face"],
-        "max_contiguous_segments": null
+        "attach_to": "BLOCK_OR_MODULE_FACE",
+        "max_contiguous_segments": 32
+      },
+      "sim": {
+        "power": {
+          "generation_per_tick": 0.0,
+          "consumption_per_tick": 0.5
+        },
+        "visibility_contribution": 2.5
+      },
+      "render": {
+        "type": "emissive_strip",
+        "fallback": "emissive_strip",
+        "metadata": {
+          "color_palette": ["#00ffff", "#ff00ff", "#ffff00", "#00ff00"],
+          "glow_intensity": 0.8
+        }
       }
     }
   }
