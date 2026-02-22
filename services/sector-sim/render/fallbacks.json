@@ -11,6 +11,13 @@
       "geometry": "sphere",
       "emissive": true,
       "default_color": "#ffffff"
+    },
+    "emissive_strip": {
+      "description": "Bright emissive linear strip for decorative and directional lighting.",
+      "geometry": "strip",
+      "emissive": true,
+      "default_color": "#ff00ff",
+      "emissive_intensity": 0.7
     }
   }
 }
