@@ -1,0 +1,54 @@
+{
+  "$schema": "../schemas/catalog.schema.json",
+  "version": "1.4.0",
+  "primitives": {
+    "solar_panel_v1": {
+      "category": "ENTITY",
+      "capabilities": ["POWER_GEN", "AESTHETIC"],
+      "rollout": "STABLE",
+      "sim": {
+        "power_generation_kw": 5.0,
+        "power_consumption_kw": 0.0,
+        "tick_effects": []
+      },
+      "render": {
+        "fallback": "flat_panel",
+        "metadata": {
+          "albedo": "#2a2a5e",
+          "reflectivity": 0.85
+        }
+      },
+      "constraints": {
+        "attach_to": ["block_face", "module_face"],
+        "max_contiguous_segments": null
+      }
+    },
+    "beacon_light_v1": {
+      "category": "ENTITY",
+      "capabilities": ["LIGHTING", "WAYFINDING"],
+      "rollout": "STABLE",
+      "sim": {
+        "power_generation_kw": 0.0,
+        "power_consumption_kw": 0.5,
+        "tick_effects": [
+          {
+            "type": "visibility_contribution",
+            "radius": 8,
+            "score": 10.0
+          }
+        ]
+      },
+      "render": {
+        "fallback": "point_light",
+        "metadata": {
+          "color": "#ffcc00",
+          "intensity": 1.0
+        }
+      },
+      "constraints": {
+        "attach_to": ["block_face"],
+        "max_contiguous_segments": null
+      }
+    }
+  }
+}

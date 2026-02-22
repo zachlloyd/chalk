@@ -1,0 +1,16 @@
+{
+  "fallback_renderers": {
+    "flat_panel": {
+      "description": "Flat rectangular panel with uniform albedo.",
+      "geometry": "quad",
+      "emissive": false,
+      "default_color": "#808080"
+    },
+    "point_light": {
+      "description": "Omnidirectional point light source.",
+      "geometry": "sphere",
+      "emissive": true,
+      "default_color": "#ffffff"
+    }
+  }
+}
