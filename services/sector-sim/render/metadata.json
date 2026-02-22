@@ -1,0 +1,43 @@
+{
+  "solar_panel_v1": {
+    "model": "solar_panel_v1.glb",
+    "fallback": {
+      "type": "flat_quad",
+      "color": [0.2, 0.3, 0.8, 1.0],
+      "emissive": false
+    },
+    "configurable": {}
+  },
+  "habitat_module_v1": {
+    "model": "habitat_module_v1.glb",
+    "fallback": {
+      "type": "box",
+      "color": [0.6, 0.6, 0.6, 1.0],
+      "emissive": false
+    },
+    "configurable": {}
+  },
+  "neon_light_strip_v2": {
+    "model": "neon_light_strip_v2.glb",
+    "fallback": {
+      "type": "emissive_strip",
+      "color": [0.0, 1.0, 0.8, 1.0],
+      "emissive": true,
+      "glow_intensity": 2.5
+    },
+    "configurable": {
+      "color_palette": {
+        "type": "color_array",
+        "default": [[0.0, 1.0, 0.8, 1.0], [1.0, 0.0, 0.5, 1.0], [0.2, 0.4, 1.0, 1.0]],
+        "description": "Array of RGBA colors the strip can cycle through."
+      },
+      "glow_intensity": {
+        "type": "number",
+        "default": 2.5,
+        "min": 0.5,
+        "max": 10.0,
+        "description": "Intensity multiplier for the emissive glow effect."
+      }
+    }
+  }
+}

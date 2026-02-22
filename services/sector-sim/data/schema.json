@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Sector Sim Catalog",
+  "type": "object",
+  "required": ["version", "primitives"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "primitives": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/primitive"
+      }
+    }
+  },
+  "definitions": {
+    "primitive": {
+      "type": "object",
+      "required": ["id", "name", "category", "capabilities", "rollout", "sim", "constraints"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*_v\\d+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "type": "string",
+          "enum": ["ENTITY", "STRUCTURE", "MODULE", "VEHICLE"]
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "POWER_GENERATION",
+              "HABITATION",
+              "LIGHTING",
+              "AESTHETIC",
+              "WAYFINDING",
+              "STORAGE",
+              "TRANSPORT"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "rollout": {
+          "type": "string",
+          "enum": ["EXPERIMENTAL", "BETA", "STABLE", "DEPRECATED"]
+        },
+        "sim": {
+          "type": "object",
+          "required": ["power_generation", "power_consumption", "visibility_score"],
+          "properties": {
+            "power_generation": {
+              "type": "number",
+              "minimum": 0
+            },
+            "power_consumption": {
+              "type": "number",
+              "minimum": 0
+            },
+            "visibility_score": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "constraints": {
+          "type": "object",
+          "required": ["attach_to", "max_contiguous"],
+          "properties": {
+            "attach_to": {
+              "type": ["string", "null"],
+              "enum": ["BLOCK_FACE", "BLOCK_OR_MODULE_FACE", null]
+            },
+            "max_contiguous": {
+              "type": ["integer", "null"],
+              "minimum": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

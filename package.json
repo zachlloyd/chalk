@@ -1,0 +1,17 @@
+{
+  "name": "world_of_warp",
+  "version": "0.1.0",
+  "description": "Sector simulation engine for World of Warp",
+  "private": true,
+  "scripts": {
+    "test": "jest --verbose",
+    "test:schema": "jest --verbose tests/schema.test.js",
+    "test:sim": "jest --verbose tests/sim-contract.test.js",
+    "test:render": "jest --verbose tests/render-fallback.test.js",
+    "test:perf": "jest --verbose tests/perf-smoke.test.js"
+  },
+  "devDependencies": {
+    "ajv": "^8.12.0",
+    "jest": "^29.7.0"
+  }
+}

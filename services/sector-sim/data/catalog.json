@@ -1,0 +1,53 @@
+{
+  "version": "0.3.0",
+  "primitives": {
+    "solar_panel_v1": {
+      "id": "solar_panel_v1",
+      "name": "Solar Panel",
+      "category": "ENTITY",
+      "capabilities": ["POWER_GENERATION"],
+      "rollout": "STABLE",
+      "sim": {
+        "power_generation": 12.0,
+        "power_consumption": 0.0,
+        "visibility_score": 0.0
+      },
+      "constraints": {
+        "attach_to": "BLOCK_FACE",
+        "max_contiguous": null
+      }
+    },
+    "habitat_module_v1": {
+      "id": "habitat_module_v1",
+      "name": "Habitat Module",
+      "category": "STRUCTURE",
+      "capabilities": ["HABITATION", "LIGHTING"],
+      "rollout": "STABLE",
+      "sim": {
+        "power_generation": 0.0,
+        "power_consumption": 8.5,
+        "visibility_score": 0.0
+      },
+      "constraints": {
+        "attach_to": null,
+        "max_contiguous": null
+      }
+    },
+    "neon_light_strip_v2": {
+      "id": "neon_light_strip_v2",
+      "name": "Neon Light Strip",
+      "category": "ENTITY",
+      "capabilities": ["AESTHETIC", "LIGHTING", "WAYFINDING"],
+      "rollout": "EXPERIMENTAL",
+      "sim": {
+        "power_generation": 0.0,
+        "power_consumption": 1.2,
+        "visibility_score": 4.5
+      },
+      "constraints": {
+        "attach_to": "BLOCK_OR_MODULE_FACE",
+        "max_contiguous": 32
+      }
+    }
+  }
+}
