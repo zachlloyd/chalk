@@ -1,0 +1,208 @@
+{
+  "id": "refinery-hub-alpha",
+  "version": "1.0.0",
+  "anchor": "sector-1-anchor-1",
+  "name": "Refinery Hub Alpha",
+  "description": "A centralized refinery hub for ore processing, storage, and distribution within sector 1.",
+  "layout": {
+    "origin": { "x": 0, "y": 0, "z": 0 },
+    "bounds": { "width": 120, "height": 80, "depth": 60 },
+    "zones": [
+      {
+        "id": "intake-zone",
+        "type": "intake",
+        "position": { "x": 0, "y": 0, "z": 0 },
+        "size": { "width": 30, "height": 80, "depth": 60 },
+        "capacity": 500,
+        "structures": [
+          {
+            "id": "intake-dock-1",
+            "type": "dock",
+            "position": { "x": 5, "y": 20, "z": 0 },
+            "facing": "west",
+            "throughput": 100
+          },
+          {
+            "id": "intake-dock-2",
+            "type": "dock",
+            "position": { "x": 5, "y": 60, "z": 0 },
+            "facing": "west",
+            "throughput": 100
+          },
+          {
+            "id": "intake-conveyor-1",
+            "type": "conveyor",
+            "from": "intake-dock-1",
+            "to": "refinery-primary",
+            "rate": 80
+          },
+          {
+            "id": "intake-conveyor-2",
+            "type": "conveyor",
+            "from": "intake-dock-2",
+            "to": "refinery-secondary",
+            "rate": 80
+          }
+        ]
+      },
+      {
+        "id": "processing-zone",
+        "type": "processing",
+        "position": { "x": 30, "y": 0, "z": 0 },
+        "size": { "width": 40, "height": 80, "depth": 60 },
+        "capacity": 300,
+        "structures": [
+          {
+            "id": "refinery-primary",
+            "type": "refinery",
+            "position": { "x": 40, "y": 20, "z": 10 },
+            "tier": 2,
+            "efficiency": 0.85,
+            "inputTypes": ["raw-ore", "crystal-shard"],
+            "outputTypes": ["refined-metal", "crystal-dust"],
+            "processingTime": 5
+          },
+          {
+            "id": "refinery-secondary",
+            "type": "refinery",
+            "position": { "x": 40, "y": 60, "z": 10 },
+            "tier": 1,
+            "efficiency": 0.70,
+            "inputTypes": ["raw-ore"],
+            "outputTypes": ["refined-metal"],
+            "processingTime": 8
+          },
+          {
+            "id": "smelter-1",
+            "type": "smelter",
+            "position": { "x": 55, "y": 40, "z": 10 },
+            "tier": 1,
+            "efficiency": 0.75,
+            "inputTypes": ["refined-metal"],
+            "outputTypes": ["alloy-ingot"],
+            "processingTime": 12
+          }
+        ]
+      },
+      {
+        "id": "storage-zone",
+        "type": "storage",
+        "position": { "x": 70, "y": 0, "z": 0 },
+        "size": { "width": 25, "height": 80, "depth": 60 },
+        "capacity": 2000,
+        "structures": [
+          {
+            "id": "silo-raw",
+            "type": "silo",
+            "position": { "x": 75, "y": 20, "z": 0 },
+            "storedType": "raw-ore",
+            "maxUnits": 800
+          },
+          {
+            "id": "silo-refined",
+            "type": "silo",
+            "position": { "x": 75, "y": 40, "z": 0 },
+            "storedType": "refined-metal",
+            "maxUnits": 600
+          },
+          {
+            "id": "silo-alloy",
+            "type": "silo",
+            "position": { "x": 75, "y": 60, "z": 0 },
+            "storedType": "alloy-ingot",
+            "maxUnits": 400
+          },
+          {
+            "id": "vault-crystal",
+            "type": "vault",
+            "position": { "x": 82, "y": 40, "z": 0 },
+            "storedType": "crystal-dust",
+            "maxUnits": 200,
+            "secured": true
+          }
+        ]
+      },
+      {
+        "id": "distribution-zone",
+        "type": "distribution",
+        "position": { "x": 95, "y": 0, "z": 0 },
+        "size": { "width": 25, "height": 80, "depth": 60 },
+        "capacity": 300,
+        "structures": [
+          {
+            "id": "outbound-dock-1",
+            "type": "dock",
+            "position": { "x": 110, "y": 20, "z": 0 },
+            "facing": "east",
+            "throughput": 120
+          },
+          {
+            "id": "outbound-dock-2",
+            "type": "dock",
+            "position": { "x": 110, "y": 60, "z": 0 },
+            "facing": "east",
+            "throughput": 120
+          },
+          {
+            "id": "distribution-conveyor-1",
+            "type": "conveyor",
+            "from": "silo-refined",
+            "to": "outbound-dock-1",
+            "rate": 100
+          },
+          {
+            "id": "distribution-conveyor-2",
+            "type": "conveyor",
+            "from": "silo-alloy",
+            "to": "outbound-dock-2",
+            "rate": 100
+          }
+        ]
+      }
+    ],
+    "connections": [
+      { "from": "intake-zone", "to": "processing-zone", "type": "pipeline", "bandwidth": 160 },
+      { "from": "processing-zone", "to": "storage-zone", "type": "pipeline", "bandwidth": 200 },
+      { "from": "storage-zone", "to": "distribution-zone", "type": "pipeline", "bandwidth": 240 }
+    ]
+  },
+  "swarm": {
+    "dronePool": "swarm-pool-alpha",
+    "maxDrones": 12,
+    "droneSpec": {
+      "type": "collector-mk2",
+      "speed": 15,
+      "cargoCapacity": 50,
+      "range": 200,
+      "returnThreshold": 0.1
+    },
+    "patrolRoutes": [
+      {
+        "id": "route-intake-sweep",
+        "waypoints": [
+          { "x": -50, "y": 0, "z": 0 },
+          { "x": -50, "y": 80, "z": 0 },
+          { "x": -20, "y": 80, "z": 0 },
+          { "x": -20, "y": 0, "z": 0 }
+        ],
+        "assignedDrones": 4
+      },
+      {
+        "id": "route-perimeter-guard",
+        "waypoints": [
+          { "x": -10, "y": -10, "z": 0 },
+          { "x": 130, "y": -10, "z": 0 },
+          { "x": 130, "y": 90, "z": 0 },
+          { "x": -10, "y": 90, "z": 0 }
+        ],
+        "assignedDrones": 4
+      }
+    ]
+  },
+  "metadata": {
+    "createdAt": "2026-02-22T18:57:58Z",
+    "sector": "sector-1",
+    "anchorRef": "sector-1-anchor-1",
+    "tags": ["refinery", "hub", "ore-processing", "storage", "distribution"]
+  }
+}
