@@ -1,0 +1,28 @@
+{
+  "capabilities": {
+    "POWER_GENERATION": {
+      "description": "Produces power for the local grid.",
+      "sim_effects": ["power_output"]
+    },
+    "STRUCTURAL": {
+      "description": "Provides structural integrity to blocks and modules.",
+      "sim_effects": []
+    },
+    "SIGNALING": {
+      "description": "Emits a signal detectable by drone navigation systems.",
+      "sim_effects": ["signal_broadcast"]
+    },
+    "WAYFINDING": {
+      "description": "Contributes to local visibility score used by drone traffic heuristics.",
+      "sim_effects": ["visibility_contribution"]
+    },
+    "AESTHETIC": {
+      "description": "Purely decorative capability with no direct sim effect.",
+      "sim_effects": []
+    },
+    "LIGHTING": {
+      "description": "Emits light in the local area, contributing to visibility and ambiance.",
+      "sim_effects": ["visibility_contribution", "ambient_light"]
+    }
+  }
+}

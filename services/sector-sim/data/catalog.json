@@ -1,0 +1,90 @@
+{
+  "$schema": "../../../schemas/catalog.schema.json",
+  "version": "2.4.0",
+  "primitives": {
+    "solar_panel_v1": {
+      "category": "ENTITY",
+      "capabilities": ["POWER_GENERATION"],
+      "rollout": "STABLE",
+      "sim": {
+        "power_generation_kw": 5.0,
+        "power_consumption_kw": 0.0
+      },
+      "constraints": {
+        "attach_to": ["block_face", "module_face"],
+        "max_contiguous_segments": null
+      },
+      "render": {
+        "fallback": "flat_panel",
+        "metadata": {
+          "surface": "reflective",
+          "albedo": 0.85
+        }
+      }
+    },
+    "cargo_beacon_v1": {
+      "category": "ENTITY",
+      "capabilities": ["WAYFINDING", "SIGNALING"],
+      "rollout": "STABLE",
+      "sim": {
+        "power_generation_kw": 0.0,
+        "power_consumption_kw": 0.3,
+        "visibility_score_contribution": 4.0
+      },
+      "constraints": {
+        "attach_to": ["block_face"],
+        "max_contiguous_segments": null
+      },
+      "render": {
+        "fallback": "blinking_point_light",
+        "metadata": {
+          "color_palette": ["#FF8800"],
+          "blink_rate_hz": 1.5
+        }
+      }
+    },
+    "hull_plate_v1": {
+      "category": "STRUCTURE",
+      "capabilities": ["STRUCTURAL"],
+      "rollout": "STABLE",
+      "sim": {
+        "power_generation_kw": 0.0,
+        "power_consumption_kw": 0.0
+      },
+      "constraints": {
+        "attach_to": ["block_face", "module_face"],
+        "max_contiguous_segments": 64
+      },
+      "render": {
+        "fallback": "flat_panel",
+        "metadata": {
+          "surface": "matte",
+          "albedo": 0.4
+        }
+      }
+    },
+    "neon_light_strip_v2": {
+      "category": "ENTITY",
+      "capabilities": ["AESTHETIC", "LIGHTING", "WAYFINDING"],
+      "rollout": "EXPERIMENTAL",
+      "sim": {
+        "power_generation_kw": 0.0,
+        "power_consumption_kw": 0.15,
+        "visibility_score_contribution": 6.0
+      },
+      "constraints": {
+        "attach_to": ["block_face", "module_face"],
+        "max_contiguous_segments": 32
+      },
+      "render": {
+        "fallback": "emissive_strip",
+        "metadata": {
+          "color_palette": ["#FF00FF", "#00FFFF", "#FF0066", "#66FF00"],
+          "glow_intensity": 0.8,
+          "emissive": true,
+          "strip_width_m": 0.05
+        }
+      }
+    }
+  }
+}

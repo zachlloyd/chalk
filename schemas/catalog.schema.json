@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "catalog.schema.json",
+  "title": "Sector Sim Primitive Catalog",
+  "type": "object",
+  "required": ["version", "primitives"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "primitives": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/definitions/primitive" }
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "primitive": {
+      "type": "object",
+      "required": ["category", "capabilities", "rollout", "sim", "constraints", "render"],
+      "properties": {
+        "category": {
+          "type": "string",
+          "enum": ["ENTITY", "STRUCTURE", "MODULE"]
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "POWER_GENERATION",
+              "STRUCTURAL",
+              "SIGNALING",
+              "WAYFINDING",
+              "AESTHETIC",
+              "LIGHTING"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "rollout": {
+          "type": "string",
+          "enum": ["EXPERIMENTAL", "BETA", "STABLE", "DEPRECATED"]
+        },
+        "sim": {
+          "type": "object",
+          "required": ["power_generation_kw", "power_consumption_kw"],
+          "properties": {
+            "power_generation_kw": { "type": "number", "minimum": 0 },
+            "power_consumption_kw": { "type": "number", "minimum": 0 },
+            "visibility_score_contribution": { "type": "number", "minimum": 0 }
+          },
+          "additionalProperties": false
+        },
+        "constraints": {
+          "type": "object",
+          "required": ["attach_to", "max_contiguous_segments"],
+          "properties": {
+            "attach_to": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["block_face", "module_face"]
+              },
+              "minItems": 1
+            },
+            "max_contiguous_segments": {
+              "type": ["integer", "null"],
+              "minimum": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "render": {
+          "type": "object",
+          "required": ["fallback", "metadata"],
+          "properties": {
+            "fallback": { "type": "string" },
+            "metadata": { "type": "object" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

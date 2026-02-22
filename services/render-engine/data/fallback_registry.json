@@ -1,0 +1,25 @@
+{
+  "fallback_renderers": {
+    "flat_panel": {
+      "description": "Simple flat-shaded quad.",
+      "geometry": "quad",
+      "material": "standard",
+      "emissive": false
+    },
+    "blinking_point_light": {
+      "description": "Point light that blinks at a configurable rate.",
+      "geometry": "point",
+      "material": "unlit",
+      "emissive": true
+    },
+    "emissive_strip": {
+      "description": "Bright emissive strip used as a safe fallback for neon/light-strip primitives. Unknown renderers gracefully degrade to this representation.",
+      "geometry": "strip",
+      "material": "emissive_unlit",
+      "emissive": true,
+      "default_color": "#FFFFFF",
+      "default_glow_intensity": 0.5,
+      "default_strip_width_m": 0.05
+    }
+  }
+}
