@@ -49,6 +49,33 @@
         "attach_to": ["block_face"],
         "max_contiguous_segments": null
       }
+    },
+    "neon_light_strip_v2": {
+      "category": "ENTITY",
+      "capabilities": ["AESTHETIC", "LIGHTING", "WAYFINDING"],
+      "rollout": "EXPERIMENTAL",
+      "sim": {
+        "power_generation_kw": 0.0,
+        "power_consumption_kw": 0.2,
+        "tick_effects": [
+          {
+            "type": "visibility_contribution",
+            "radius": 6,
+            "score": 5.0
+          }
+        ]
+      },
+      "render": {
+        "fallback": "emissive_strip",
+        "metadata": {
+          "color_palette": ["#ff00ff", "#00ffff", "#ff3300"],
+          "glow_intensity": 0.8
+        }
+      },
+      "constraints": {
+        "attach_to": ["block_face", "module_face"],
+        "max_contiguous_segments": 32
+      }
     }
   }
 }

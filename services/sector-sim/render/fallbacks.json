@@ -11,6 +11,12 @@
       "geometry": "sphere",
       "emissive": true,
       "default_color": "#ffffff"
+    },
+    "emissive_strip": {
+      "description": "Bright emissive linear strip with configurable color and glow.",
+      "geometry": "elongated_quad",
+      "emissive": true,
+      "default_color": "#ff00ff"
     }
   }
 }
