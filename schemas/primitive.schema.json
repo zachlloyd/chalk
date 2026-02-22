@@ -1,0 +1,153 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://world-of-warp.dev/schemas/primitive.schema.json",
+  "title": "Primitive Definition",
+  "description": "Schema for a server primitive in the World of Warp catalog.",
+  "type": "object",
+  "required": [
+    "id",
+    "version",
+    "category",
+    "capabilities",
+    "rollout",
+    "sim",
+    "render",
+    "constraints"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*_v[0-9]+$",
+      "description": "Unique identifier for the primitive, must end with a version suffix."
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version number."
+    },
+    "category": {
+      "type": "string",
+      "enum": ["ENTITY", "BLOCK", "MODULE", "SYSTEM"],
+      "description": "Top-level category of the primitive."
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "AESTHETIC",
+          "LIGHTING",
+          "WAYFINDING",
+          "STRUCTURAL",
+          "POWER_GEN",
+          "POWER_STORE",
+          "COMPUTE",
+          "SENSOR",
+          "TRANSPORT",
+          "LIFE_SUPPORT"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true,
+      "description": "Capabilities provided by this primitive."
+    },
+    "rollout": {
+      "type": "string",
+      "enum": ["EXPERIMENTAL", "STAGING", "GA"],
+      "description": "Rollout stage for the primitive."
+    },
+    "sim": {
+      "type": "object",
+      "required": [
+        "power_generation_kw",
+        "power_consumption_kw",
+        "tick_effects"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "power_generation_kw": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Power generated per tick in kilowatts."
+        },
+        "power_consumption_kw": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Power consumed per tick in kilowatts."
+        },
+        "tick_effects": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["effect", "scope", "magnitude"],
+            "additionalProperties": false,
+            "properties": {
+              "effect": {
+                "type": "string",
+                "description": "Name of the sim effect."
+              },
+              "scope": {
+                "type": "string",
+                "enum": ["LOCAL", "SECTOR", "GLOBAL"],
+                "description": "Scope at which the effect applies."
+              },
+              "magnitude": {
+                "type": "number",
+                "description": "Magnitude of the effect per segment or unit."
+              }
+            }
+          },
+          "description": "Effects applied each simulation tick."
+        }
+      }
+    },
+    "render": {
+      "type": "object",
+      "required": ["fallback", "metadata"],
+      "additionalProperties": false,
+      "properties": {
+        "fallback": {
+          "type": "object",
+          "required": ["type", "emissive", "color"],
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "Fallback render type identifier."
+            },
+            "emissive": {
+              "type": "boolean",
+              "description": "Whether the fallback render is emissive."
+            },
+            "color": {
+              "type": "string",
+              "pattern": "^#[0-9a-fA-F]{6}$",
+              "description": "Default fallback color as hex."
+            }
+          }
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Renderer-specific metadata."
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "attachment": {
+          "type": "string",
+          "description": "Attachment requirement for placement."
+        },
+        "max_contiguous_segments": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of contiguous segments allowed."
+        }
+      }
+    }
+  }
+}
